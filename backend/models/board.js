@@ -4,7 +4,7 @@ const moogose = require("mongoose");
 
 const boardSchema = new moogose.Schema({
 
-    user_id: Obcject_id,
+    user_id: String,
     name: String,
     description: String,
     imgUrl: String,
