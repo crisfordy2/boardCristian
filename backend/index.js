@@ -15,7 +15,7 @@ const app = express();
 app.use(express.json())
 app.use("/api/user/", User);
 app.use("/api/auth/", Auth);
-app.use("/api/user/", Board)
+app.use("/api/board/", Board)
 
 
 const port = process.env.PORT || 3001;

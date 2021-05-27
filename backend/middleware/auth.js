@@ -16,7 +16,7 @@ const auth = (req, res, next)=>{
         req.user = payload;
         next();        
     } catch (error) {
-        return res.status(401).send("error:", error );
+        return res.status(401).send("doesn´t exist Token");
     }
 }
 
