@@ -1,7 +1,5 @@
 const moogose = require("mongoose");
 
-// collection
-
 const boardSchema = new moogose.Schema({
 
     userId: String,
@@ -12,7 +10,6 @@ const boardSchema = new moogose.Schema({
     date: {type: Date, default: Date.now}
 })
 
-// model
 const Board = moogose.model("board", boardSchema);
 
 module.exports = Board;
