@@ -1,28 +1,26 @@
 const express = require("express");
-const mongoose = require("mongoose");
+const {dataBase} = require("./db/db");
+const cors = require("cors");
+require("dotenv").config();
 
 const User = require("./routes/user");
-const Auth = require("./routes/auth");
 const Board = require("./routes/board");
+const Auth = require("./routes/auth");
+const Role = require("./routes/role");
+
 
 const app = express();
 
 app.use(express.json())
+app.use(cors());
 app.use("/api/user/", User);
 app.use("/api/auth/", Auth);
 app.use("/api/board/", Board)
+app.use("/api/role/", Role)
 
-const port = process.env.PORT || 3001;
 
-app.listen(port, ()=>{
-    console.log("running port:", port);
+app.listen(process.env.PORT, ()=>{
+    console.log("running port:", process.env.PORT);
 })
 
-mongoose.connect("mongodb://127.0.0.1:27017/boardCristianDB", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-    useCreateIndex: true
-})
-.then(()=>{console.log("conexion db successful")})
-.catch((err)=>{console.log("error db:", err)})
+dataBase();

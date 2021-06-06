@@ -2,12 +2,12 @@ const moogose = require("mongoose");
 
 const boardSchema = new moogose.Schema({
 
-    userId: String,
+    userId: {type: moogose.Schema.ObjectId, ref: "user"},
     name: String,
     description: String,
-    imgUrl: String,
     status: String,
-    date: {type: Date, default: Date.now}
+    imageUrl: String,
+    date: {type: Date, default: Date.now},
 })
 
 const Board = moogose.model("board", boardSchema);

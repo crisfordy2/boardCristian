@@ -1,41 +1,87 @@
 const express = require("express");
 const router = express.Router();
+const mongoose = require("mongoose");
+const fs = require("fs");
+const multipart = require("connect-multiparty");
+const mult = multipart();
+const path = require("path");
+const moment = require("moment");
 
 const Board = require("../models/board");
 const Auth = require("../middleware/auth");
+const UserAuth = require("../middleware/user");
+const Upload = require("../middleware/file");
 
 
-// crear actividades - URL: http://localhost:3001/api/board/saveTask
-router.post("/saveTask", Auth, async (req, res)=>{        
+router.post("/saveTaskImg",mult, Upload, Auth, UserAuth, async (req, res)=>{     
+    
+    if(!req.body.name || !req.body.description) return res.status(401).send("Imcomplete data");
+
+    let imageUrl = "";
+    
+    if(req.files !== undefined && req.files.image.type){
+        const url = req.protocol + "://" + req.get("host") + "/";
+        let serverImg = "./uploads/" + moment().unix() + path.extname(req.files.image.path);
+        fs.createReadStream(req.files.image.path).pipe(fs.createWriteStream(serverImg));
+        imageUrl = url + "uploads/" + moment().unix() + path.extname(req.files.image.path);
+    }        
     
     const board = new Board({
-        userId: req.user_Id,
+        userId: req.user._id,
+        name: req.body.name,
+        description: req.body.description,
+        imageUrl: imageUrl,
+        status: "to-do"         
+    });
+
+    const result = await board.save();
+    if(!result) return res.status(401).send("Error creating")
+    return res.status(200).send({result});
+})
+
+
+router.post("/saveTask", Auth, UserAuth, async (req, res)=>{     
+    
+    if(!req.body.name || !req.body.description) return res.status(401).send("Imcomplete data");
+
+    const validateId = mongoose.Types.ObjectId.isValid(req.user._id);
+    if(!validateId) return res.status(401).send("Invalid Id");
+    
+    const board = new Board({
+        userId: req.user._id,
         name: req.body.name,
         description: req.body.description,
         status: "to-do"         
     });
 
     const result = await board.save();
+    if(!result) return res.status(401).send("Error creating")
     return res.status(200).send({result});
 })
 
 
-// listar actividades - URL: http://localhost:3001/api/board/listTask
-router.get("/listTask" , Auth, async(req, res)=>{   
+router.get("/listTask" , Auth, UserAuth, async(req, res)=>{   
 
-    const board = await Board.find({userId: req.user_Id});
+    const validateId = mongoose.Types.ObjectId.isValid(req.user._id);
+    if(!validateId) return res.status(401).send("Invalid Id");
+
+    const board = await Board.find({userId: req.user._id});
     res.status(200).send({board});
 })
 
 
-// editar actividades - URL: http://localhost:3001/api/board/updateTask
-router.put("/updateTask" , Auth, async (req, res)=>{    
+router.put("/updateTask" , Auth, UserAuth, async (req, res)=>{
+
+    if(!req.body.name || !req.body.description || !req.body._id || !req.body.status) return res.status(401).send("Imcomplete data");
+    
+    const validateId = mongoose.Types.ObjectId.isValid(req.body._id);
+    if(!validateId) return res.status(401).send("Invalid Id");
 
     const board = await Board.findByIdAndUpdate(req.body._id, {
-        userId: req.user_Id,
+        userId: req.user._id,
         name: req.body.name,
+        status: req.body.status,
         description: req.body.description,        
-        status: req.body.status
     })
 
     if(!board) return res.status(401).send("could not update");
@@ -43,8 +89,7 @@ router.put("/updateTask" , Auth, async (req, res)=>{
 })
 
 
-// eliminar actividades - URL: http://localhost:3001/api/board/:_id
-router.delete("/:_id" , Auth, async(req, res)=>{    
+router.delete("/:_id" , Auth, UserAuth, async(req, res)=>{    
 
     const board = await Board.findByIdAndDelete(req.params._id);
     if(!board) return res.status(401).send("could not delete");
