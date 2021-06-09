@@ -1,0 +1,13 @@
+
+.bgHeader{
+    background-color: aqua;    
+}
+
+a{
+    text-decoration: none; 
+    color: black;   
+}
+
+.headerSpacer {
+    flex: 1 1 auto;
+}
