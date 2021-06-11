@@ -1,0 +1,30 @@
+.container{
+    display: flex;
+    flex-direction: column;
+}
+
+.form{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 80px;
+}
+
+.button{
+    width: 100%;
+    background-color: darkmagenta;
+}
+
+.card{
+    width: 100%;
+    min-width: 150px;
+    max-width: 600px;
+}
+
+mat-card-title{
+    text-align: center;
+}
+
+.form{
+
+}

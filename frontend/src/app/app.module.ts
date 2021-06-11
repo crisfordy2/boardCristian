@@ -30,6 +30,9 @@ import {MatTableModule} from '@angular/material/table';
 import {MatIconModule} from '@angular/material/icon';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { HttpClientModule } from "@angular/common/http";
+
 
 @NgModule({
   declarations: [
@@ -56,7 +59,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatInputModule,
     MatExpansionModule,
     MatTableModule,
-    MatIconModule    
+    MatIconModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule    
   ],
   providers: [AuthService, BoardService, RoleService, AuthGuard, TokenInterceptorService],
   bootstrap: [AppComponent]
