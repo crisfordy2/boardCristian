@@ -33,7 +33,7 @@ router.post("/registerUser", async (req, res)=>{
         const result = await user.save()
         if(!result) return res.status(400).send("failed in the creating user")
         const tokenJWT = user.generateJWT();
-        res.status(200).send(tokenJWT)        
+        res.status(200).send({tokenJWT})        
     } catch (error) {
         return res.status(400).send("failed in the creating user")        
     }
