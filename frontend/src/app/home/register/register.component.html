@@ -1,17 +1,6 @@
 <div class="form">
     <mat-card class="card">
-        <mat-card-title>Register User</mat-card-title>
-        
-        <div *ngIf="successMessagge">
-            <div class="alert alert-success" role="alert">
-                <div>
-                    {{successMessagge}}
-                </div>
-                <button type="button" class="close" (click)="xAlert()" data-dismiss="alert" aria-label="close">
-                    <span aria-hidden="true">x</span>
-                </button>
-            </div>
-        </div>
+        <mat-card-title>Register User</mat-card-title>      
 
         <div *ngIf="errorMessagge">
             <div class="alert alert-danger" role="alert">

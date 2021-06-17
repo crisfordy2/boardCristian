@@ -1,1 +1,32 @@
-<p>save-task works!</p>
+<div class="form">
+    <mat-card class="card">
+        <mat-card-title>Save Task</mat-card-title>      
+
+        <div *ngIf="errorMessagge">
+            <div class="alert alert-danger" role="alert">
+                <div>
+                    {{errorMessagge}}
+                </div>
+                <button type="button" class="close" (click)="xAlert()" data-dismiss="alert" aria-label="close">
+                    <span aria-hidden="true">x</span>
+                </button>
+            </div>
+        </div>
+
+        <mat-card-content>
+            <div class="container">
+                <mat-form-field>
+                    <input [(ngModel)]="taskData.name" placeholder="Name" matInput required>
+                </mat-form-field>
+                <mat-form-field>
+                    <input [(ngModel)]="taskData.description" placeholder="Description" matInput required>
+                </mat-form-field>                
+            </div>           
+        </mat-card-content>
+
+        <mat-card-actions>
+            <button (click)="saveTask()" class="button" mat-raised-button>Register</button>
+        </mat-card-actions>
+
+    </mat-card>
+</div>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterModule } from "@angular/router";
+import { Router } from "@angular/router";
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -10,13 +10,11 @@ import { AuthService } from '../../services/auth.service';
 export class RegisterComponent implements OnInit {
 
   public dataUser: any;
-  public errorMessagge: String;
-  public successMessagge: String;
+  public errorMessagge: String;  
 
-  constructor(private auth: AuthService, private router: RouterModule) {
+  constructor(private auth: AuthService, private router: Router) {
     this.dataUser = {};
-    this.errorMessagge = '';
-    this.successMessagge = '';
+    this.errorMessagge = '';  
   }
 
   ngOnInit(): void {
@@ -29,16 +27,13 @@ export class RegisterComponent implements OnInit {
       this.errorMessagge = 'Failed process: Incomplete data';
       this.closeAlert();
       this.dataUser = {};
-    } else {
-      // console.log(this.dataUser)
-      
+    } else {  
       this.auth.registerUser(this.dataUser).subscribe(
-        (res)=>{          
-          console.log(res);
-          this.successMessagge = 'Register user: successful'
-          this.closeAlert();
-          this.dataUser = {};
-
+        (res: any)=>{          
+          console.log(res);          
+          this.dataUser = {};          
+          localStorage.setItem("token", res.tokenJWT);
+          this.router.navigate(['/listTask']);
         },
         (err)=>{          
           console.log(err);
@@ -52,14 +47,12 @@ export class RegisterComponent implements OnInit {
 
   closeAlert(){
     setTimeout(()=>{
-      this.errorMessagge = '';
-      this.successMessagge = '';
+      this.errorMessagge = '';      
     }, 3000)
   }
 
   xAlert(){  
-    this.errorMessagge = '';
-    this.successMessagge = '';  
+    this.errorMessagge = '';    
   }
 
 }

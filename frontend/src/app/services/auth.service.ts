@@ -18,4 +18,8 @@ export class AuthService {
     return this.http.post(this.env + 'user/registerUser', user)
   }
 
+  login(user: any){
+    return this.http.post(this.env + 'auth/login', user)
+  }
+
 }
