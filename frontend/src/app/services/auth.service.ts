@@ -22,4 +22,12 @@ export class AuthService {
     return this.http.post(this.env + 'auth/login', user)
   }
 
+  getToken(){
+    return localStorage.getItem('token');
+  }
+
+  loggedIn(){
+    return !!localStorage.getItem('token');
+  }
+
 }

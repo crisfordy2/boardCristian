@@ -25,10 +25,9 @@ export class LoginComponent implements OnInit {
     if (!this.loginData.email || !this.loginData.password) {
       console.log('Imcomplete data')
       this.errorMessagge = 'Imcomplete data';
-      this.closeAlert();
-      this.loginData = {};
+      this.closeAlert();  
       
-    } else {
+    } else {      
       this.auth.login(this.loginData).subscribe(
         (res: any)=>{
           console.log(res);
