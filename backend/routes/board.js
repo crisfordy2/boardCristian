@@ -89,11 +89,14 @@ router.put("/updateTask" , Auth, UserAuth, async (req, res)=>{
 })
 
 
-router.delete("/:_id" , Auth, UserAuth, async(req, res)=>{    
+router.delete("/deleteTask/:_id" , Auth, UserAuth, async(req, res)=>{
+        
+    const validId = mongoose.Types.ObjectId.isValid(req.params._id);
+    if (!validId) return res.status(401).send("Process failed: Invalid id");
 
     const board = await Board.findByIdAndDelete(req.params._id);
     if(!board) return res.status(401).send("could not delete");
-    return res.status(200).send("Activity Delete")
+    return res.status(200).send({message:"Activity Delete"});
 })
 
 module.exports = router;
