@@ -46,6 +46,10 @@
                         {{task.description}}
                     </mat-panel-description>
 
+                    <mat-panel-description>
+                        <img src="{{task.imageUrl}}" alt="algo">
+                    </mat-panel-description>
+
                     <mat-action-row>
                         <button class="btSelectTodo" mat-button (click)="updateTask(task, 'to-do')">
                             to-do

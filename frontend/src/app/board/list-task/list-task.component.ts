@@ -10,12 +10,12 @@ import { BoardService } from '../../services/board.service';
 export class ListTaskComponent implements OnInit {
   public tasksData: any;
   public errorMessagge: String;  
-  public successMessagge: String;  
+  public successMessagge: String;    
 
   constructor(private board: BoardService, private router: Router) {
     this.tasksData = {};
     this.errorMessagge = '';
-    this.successMessagge = '';
+    this.successMessagge = '';    
   }
 
   ngOnInit(): void {
